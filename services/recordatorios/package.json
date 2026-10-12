@@ -1,0 +1,15 @@
+{
+  "name": "@citas/recordatorios",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Consumidor 2: programa recordatorios y publica RecordatorioVencido al vencer",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@citas/shared": "*",
+    "mssql": "^12.7.2"
+  }
+}

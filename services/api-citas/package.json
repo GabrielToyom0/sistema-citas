@@ -1,0 +1,16 @@
+{
+  "name": "@citas/api-citas",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Productor: registra citas (transacción cita + outbox) y publica CitaAgendada",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@citas/shared": "*",
+    "express": "^5.2.1",
+    "mssql": "^12.7.2"
+  }
+}

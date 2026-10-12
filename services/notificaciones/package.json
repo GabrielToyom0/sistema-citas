@@ -1,0 +1,15 @@
+{
+  "name": "@citas/notificaciones",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Consumidor 1: envía correos de confirmación y recordatorio (idempotente por eventId)",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@citas/shared": "*",
+    "nodemailer": "^10.0.10"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "name": "sistema-citas-eda",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Prototipo EDA: agendamiento de citas médicas con RabbitMQ (ISWI 2026, URL)",
+  "workspaces": [
+    "packages/*",
+    "services/*"
+  ],
+  "scripts": {
+    "test": "node --test",
+    "lint": "eslint .",
+    "up": "docker compose up -d --build",
+    "down": "docker compose down",
+    "logs": "docker compose logs -f api-citas notificaciones recordatorios"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.10.0",
+    "globals": "^17.0.0"
+  }
+}
