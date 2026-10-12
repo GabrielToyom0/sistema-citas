@@ -1,0 +1,26 @@
+# Dueños por módulo: su aprobación es obligatoria en los PR que tocan sus archivos.
+
+
+# M1 Plataforma — Gabriel Toyom
+*                              @GabrielToyom0
+/packages/shared/              @GabrielToyom0
+/.github/                      @GabrielToyom0
+/docker-compose.yml            @GabrielToyom0
+/Dockerfile                    @GabrielToyom0
+/db/000_crear_bases.sql        @GabrielToyom0
+/db/init.sh                    @GabrielToyom0
+
+# M2 API de Citas — Sophia Corea
+/services/api-citas/           @scoreap
+/db/citas/                     @scoreap
+
+# M3 Portal Web + Relay outbox — Javier Monje
+/web/                           @jemonje
+/services/api-citas/src/outbox/ @jemonje
+
+# M4 Notificaciones — Ruddy Cuyán
+/services/notificaciones/      @DurrysCode
+
+# M5 Recordatorios — Nery Herrera
+/services/recordatorios/       @nshernandez
+/db/recordatorios/             @nshernandez
