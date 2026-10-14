@@ -56,7 +56,7 @@ sistema-citas/
 │   ├── portal/               # M3  HTML + JS sin framework
 │   └── nginx/                # M3  proxy /api y cabeceras de seguridad
 ├── db/                       # scripts SQL por base de datos (ejecutados por db-init)
-├── docs/                     # Kanban, kanban.csv y guion de la demo
+├── docs/                     # Kanban (kanban.xlsx) y evidencias de pruebas
 ├── .github/                  # CI, CODEOWNERS, plantilla de PR
 ├── Dockerfile                # imagen común (--build-arg SERVICIO=...)
 └── docker-compose.yml
@@ -72,4 +72,4 @@ sistema-citas/
 | M4 Notificaciones | Ruddy Cuyán |
 | M5 Recordatorios | Nery Herrera |
 
-Ver [CONTRIBUTING.md](CONTRIBUTING.md), [docs/KANBAN.md](docs/KANBAN.md) y [docs/DEMO.md](docs/DEMO.md).
+Ver [CONTRIBUTING.md](CONTRIBUTING.md) y el Kanban en `docs/kanban.xlsx`. El plan de commits, la guía de pull requests y el guion de la demo se comparten con el equipo fuera del repositorio.

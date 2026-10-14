@@ -2,11 +2,11 @@
 
 ## Flujo de trabajo (GitHub Flow)
 
-1. Tomar una tarjeta de *Por hacer* en el [Kanban](docs/KANBAN.md) y moverla a *En progreso*.
+1. Revisar la siguiente tarjeta asignada en el Kanban (`docs/kanban.xlsx`) y su fecha en el plan de commits (compartido por Gabriel).
 2. Crear una rama desde `main` actualizado: `tipo/K-NN-descripcion-corta`.
 3. Hacer commits pequeños y frecuentes **con tu propia cuenta** (ver abajo).
-4. Abrir un PR con la plantilla; lo aprueba otro integrante (CODEOWNERS) y el CI debe estar en verde.
-5. Fusionar con **Create a merge commit** (no *squash*) para conservar los commits de cada integrante en el historial. Borrar la rama y mover la tarjeta a *Hecho*.
+4. Abrir un PR con el título y la descripción de la guía de pull requests (compartida por Gabriel); lo aprueba otro integrante (CODEOWNERS) y el CI debe estar en verde.
+5. Fusionar con **Create a merge commit** (no *squash*) para conservar los commits de cada integrante en el historial. Borrar la rama. Gabriel refleja el avance en el Kanban en su siguiente push (solo él modifica `docs/kanban.xlsx`).
 
 `main` está protegida: no se permite push directo (excepto el commit inicial del 12/10, ver el plan).
 
@@ -42,7 +42,7 @@ Refs: K-11
 
 ## Plan de commits por integrante
 
-Qué sube cada integrante, en qué fecha, en qué rama y con qué mensaje: [docs/PLAN-COMMITS.md](docs/PLAN-COMMITS.md).
+Qué sube cada integrante, en qué fecha, en qué rama y con qué mensaje está en el plan de commits que Gabriel compartió con el equipo (`Plan-de-commits.html`). El texto de cada PR y el comentario del revisor están en `Pull-requests.html`.
 
 ## Antes de abrir un PR
 
