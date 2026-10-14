@@ -1,0 +1,142 @@
+name: sistema-citas
+
+x-amqp: &amqp
+  AMQP_URL: amqp://${RABBITMQ_USER}:${RABBITMQ_PASSWORD}@rabbitmq:5672
+
+services:
+  rabbitmq:
+    image: rabbitmq:4.1-management-alpine
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
+    ports:
+      - "5672:5672"
+      - "15672:15672"   # consola: http://localhost:15672
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: Developer
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD}
+    ports:
+      - "14333:1433"    # 14333 para no chocar con un SQL Server local
+    volumes:
+      - mssql-data:/var/opt/mssql
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P \"$${MSSQL_SA_PASSWORD}\" -C -b -Q 'SELECT 1' -o /dev/null"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 20s
+
+  db-init:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    entrypoint: ["/bin/bash", "/db/init.sh"]
+    environment:
+      DB_HOST: sqlserver
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD}
+      CITAS_DB_PASSWORD: ${CITAS_DB_PASSWORD}
+      RECORDATORIOS_DB_PASSWORD: ${RECORDATORIOS_DB_PASSWORD}
+    volumes:
+      - ./db:/db:ro
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    restart: "no"
+
+  mailhog:
+    image: mailhog/mailhog:v1.0.1
+    ports:
+      - "8025:8025"     # bandeja: http://localhost:8025
+
+  api-citas:
+    build:
+      context: .
+      args:
+        SERVICIO: api-citas
+    environment:
+      <<: *amqp
+      PORT: "3000"
+      DB_HOST: sqlserver
+      DB_NAME: CitasDB
+      DB_USER: citas_app
+      DB_PASSWORD: ${CITAS_DB_PASSWORD}
+      DB_TRUST_CERT: "true"
+      CLINIC_TZ_OFFSET: ${CLINIC_TZ_OFFSET}
+    ports:
+      - "3000:3000"
+    depends_on:
+      db-init:
+        condition: service_completed_successfully
+      rabbitmq:
+        condition: service_started   # la API registra citas aunque el broker no esté listo (RF-02)
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://localhost:3000/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    restart: unless-stopped
+
+  notificaciones:
+    build:
+      context: .
+      args:
+        SERVICIO: notificaciones
+    environment:
+      <<: *amqp
+      SMTP_HOST: mailhog
+      SMTP_PORT: "1025"
+      MAIL_FROM: "Clínica <citas@clinica.local>"
+      PROCESSED_FILE: /data/eventos-procesados.log
+    volumes:
+      - notificaciones-data:/data
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      mailhog:
+        condition: service_started
+    restart: unless-stopped
+
+  recordatorios:
+    build:
+      context: .
+      args:
+        SERVICIO: recordatorios
+    environment:
+      <<: *amqp
+      DB_HOST: sqlserver
+      DB_NAME: RecordatoriosDB
+      DB_USER: recordatorios_app
+      DB_PASSWORD: ${RECORDATORIOS_DB_PASSWORD}
+      DB_TRUST_CERT: "true"
+      REMINDER_LEAD_MINUTES: ${REMINDER_LEAD_MINUTES}
+      REMINDER_DEMO_DELAY_SECONDS: ${REMINDER_DEMO_DELAY_SECONDS}
+    depends_on:
+      db-init:
+        condition: service_completed_successfully
+      rabbitmq:
+        condition: service_healthy
+    restart: unless-stopped
+
+  portal:
+    image: nginx:1.27-alpine
+    volumes:
+      - ./web/portal:/usr/share/nginx/html:ro
+      - ./web/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    ports:
+      - "8080:80"       # portal: http://localhost:8080
+    depends_on:
+      - api-citas
+
+volumes:
+  rabbitmq-data:
+  mssql-data:
+  notificaciones-data:
