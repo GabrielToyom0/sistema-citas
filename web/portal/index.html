@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agendar cita</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main>
+    <h1>Agendar cita médica</h1>
+
+    <form id="form-cita" novalidate>
+      <fieldset>
+        <legend>1. Médico y fecha</legend>
+        <label for="medico">Médico</label>
+        <select id="medico" required></select>
+
+        <label for="fecha">Fecha</label>
+        <input id="fecha" type="date" required>
+      </fieldset>
+
+      <fieldset>
+        <legend>2. Horario disponible</legend>
+        <div id="horarios" class="horarios" role="radiogroup" aria-label="Horarios disponibles"></div>
+      </fieldset>
+
+      <fieldset>
+        <legend>3. Tus datos</legend>
+        <label for="nombre">Nombre completo</label>
+        <input id="nombre" type="text" minlength="2" maxlength="100" autocomplete="name" required>
+
+        <label for="email">Correo electrónico</label>
+        <input id="email" type="email" maxlength="254" autocomplete="email" required>
+      </fieldset>
+
+      <button id="enviar" type="submit" disabled>Confirmar cita</button>
+    </form>
+
+    <div id="mensaje" role="status" aria-live="polite"></div>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
