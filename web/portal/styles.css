@@ -1,0 +1,76 @@
+:root {
+  --azul: #1f3b70;
+  --azul-claro: #438dd5;
+  --borde: #c9d3e0;
+  --ok: #1e7a3c;
+  --error: #b42318;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  color: #1c2430;
+  background: #f5f7fb;
+}
+
+main {
+  max-width: 560px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+h1 { color: var(--azul); }
+
+fieldset {
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  margin: 0 0 1rem;
+  padding: 1rem;
+  background: #fff;
+}
+
+legend { font-weight: 600; color: var(--azul); }
+
+label { display: block; margin: .5rem 0 .25rem; }
+
+input, select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: .5rem;
+  border: 1px solid var(--borde);
+  border-radius: 6px;
+  font: inherit;
+}
+
+.horarios {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
+  gap: .5rem;
+}
+
+.horarios p { grid-column: 1 / -1; margin: 0; }
+
+.horarios button {
+  padding: .4rem;
+  border: 1px solid var(--azul-claro);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--azul);
+  cursor: pointer;
+}
+
+.horarios button[aria-checked="true"] { background: var(--azul-claro); color: #fff; }
+
+button[type="submit"] {
+  width: 100%;
+  padding: .75rem;
+  border: 0;
+  border-radius: 6px;
+  background: var(--azul);
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button:disabled { opacity: .5; cursor: not-allowed; }
+
+#mensaje { margin-top: 1rem; }
+.ok { color: var(--ok); }
+.error { color: var(--error); }
