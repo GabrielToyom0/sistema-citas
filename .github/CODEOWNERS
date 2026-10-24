@@ -15,12 +15,12 @@
 /db/citas/                     @scoreap
 
 # M3 Portal Web + Relay outbox — Javier Monje
-/web/                           @jemonje
-/services/api-citas/src/outbox/ @jemonje
+/web/                           @jemonje1
+/services/api-citas/src/outbox/ @jemonje1
 
 # M4 Notificaciones — Ruddy Cuyán
 /services/notificaciones/      @DurrysCode
 
 # M5 Recordatorios — Nery Herrera
-/services/recordatorios/       @nshernandez
-/db/recordatorios/             @nshernandez
+/services/recordatorios/       @NSHERNANDEZH
+/db/recordatorios/             @NSHERNANDEZH
